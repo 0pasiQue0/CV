@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arnold Sjölander - Interactive CV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #6c9bcf;
+            --accent: #ff6b6b;
+            --dark: #1a1f2d;
+            --darker: #121620;
+            --light: #f5f7fa;
+            --gray: #a0aec0;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(74, 111, 165, 0.2) 0%, transparent 40%);
+            z-index: 1;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This ensures the image covers the area without distortion */
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .title {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-item i {
+            color: var(--accent);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin: 1.5rem auto;
+            max-width: 700px;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: rgba(26, 31, 45, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(74, 111, 165, 0.3);
+            color: white;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 60%;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            color: white;
+        }
+
+        .section-content {
+            padding-left: 3rem;
+        }
+
+        /* Competencies */
+        .competencies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .competency-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid rgba(74, 111, 165, 0.2);
+        }
+
+        .competency-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .competency-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .competency-card i {
+            color: var(--accent);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 50%;
+            padding: 1.5rem 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.8rem;
+            transition: var(--transition);
+            border: 1px solid rgba(74, 111, 165, 0.2);
+            position: relative;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            top: 2rem;
+            right: -10px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-date {
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .timeline-position {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .timeline-list {
+            list-style-type: none;
+        }
+
+        .timeline-list li {
+            margin-bottom: 0.7rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Education */
+        .education-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .education-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.8rem;
+            transition: var(--transition);
+            border: 1px solid rgba(74, 111, 165, 0.2);
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .education-period {
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-institution {
+            color: var(--secondary);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .education-field {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        /* Hobbies */
+        .hobbies-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .hobby-card {
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            border: 1px solid rgba(74, 111, 165, 0.2);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .hobby-card:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .hobby-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 99;
+            border: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+                left: 0 !important;
+            }
+
+            .timeline-item::after {
+                left: 20px !important;
+            }
+
+            .section-content {
+                padding-left: 0;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <div class="profile-pic">
+                <!-- Replace with your image path -->
+                <img src="media/headshot.png" alt="Arnold Sjölander">
+            </div>
+            <h1>Arnold Sjölander</h1>
+            <div class="title">Kundservice Agent</div>
+            <p class="tagline">Resultatinriktad och servicefokuserad kundserviceagent med en stark teknisk kompetens, hög arbetsmoral och ett professionellt bemötande. Kännetecknas av entusiasm, god självinsikt och ett genuint engagemang för att skapa positiva kundupplevelser.</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Esklistuna, Sverige</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>0762458141</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>arnold.sjolander@gmail.com</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <nav>
+            <a href="#competencies" class="nav-link active">Kompetenser</a>
+            <a href="#employment" class="nav-link">Anställningshistorik</a>
+            <a href="#education" class="nav-link">Utbildning</a>
+            <a href="#internships" class="nav-link">Praktikplatser</a>
+            <a href="#hobbies" class="nav-link">Hobbies</a>
+            <a href="#languages" class="nav-link">Språk</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <!-- Competencies Section -->
+        <section id="competencies">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h2>Kompetenser</h2>
+            </div>
+            <div class="section-content">
+                <div class="competencies-grid">
+                    <div class="competency-card">
+                        <h3><i class="fas fa-comments"></i> Kommunikation</h3>
+                        <p>Erfaren i både muntlig och skriftlig kundkommunikation via telefon och e-post.</p>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-laptop"></i> Datorfärdigheter</h3>
+                        <p>Avancerad användning av kundserviceverktyg och tekniska system.</p>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-headset"></i> Kundservice</h3>
+                        <p>God kommunikativ förmåga, empati och lösningsfokus i kundbemötande.</p>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-tachometer-alt"></i> Stresshantering</h3>
+                        <p>Förmåga att arbeta effektivt i högt tempo och föränderliga miljöer.</p>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-cogs"></i> Teknisk Expertis</h3>
+                        <p>Expertis inom automation, elektronik, felsökning och mjukvaruintegration.</p>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-lightbulb"></i> Entreprenörskap</h3>
+                        <p>Erfarenhet av produktutveckling, affärsidéutformning och användning av digitala verktyg.</p>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-laptop-code"></i> Programmering & Systemdesign</h3>
+                        <p>Kunskap inom Arduino, Raspberry Pi, ADB, API-integrationer, kampanjautomation och AI-stöd.</p>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-project-diagram"></i> Projektledning & Dokumentation</h3>
+                        <p>Strukturerat arbetssätt med fokus på tydlighet, förbättring och användarvänlighet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Employment History -->
+        <section id="employment">
+
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h2>Anställningshistorik</h2>
+            </div>
+            <div class="section-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Juni 2021 — Maj 2025</div>
+                            <div class="timeline-company">Privat</div>
+                            <div class="timeline-position">Omvårdnad av familjemedlem</div>
+                            <ul class="timeline-list">
+                                <li>Tog ett stop från arbete för att spendera resten av tiden min far hade kvar.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Mars 2018 — Maj 2021</div>
+                            <div class="timeline-company">Transcom AB, Esklistuna</div>
+                            <div class="timeline-position">Kundservice Agent</div>
+                            <ul class="timeline-list">
+                                <li>Hantering av kunddialog via telefon och e-post med fokus på att uppnå hög kundnöjdhet</li>
+                                <li>Användning av mätbara insikter för att utveckla kundupplevelsen</li>
+                                <li>Utbildad inom mobil, bredband, TV och telefoni</li>
+                                <li>Samlade och presenterade värdefull feedback från kunder och kollegor</li>
+                                <li>Försåg kunder med optimal kundservice</li>
+                                <li>Samarbetade för att uppnå bästa resultat</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Mars 2015 — Juni 2017</div>
+                            <div class="timeline-company">Allra Försäkringsförmedling AB, Stockholm</div>
+                            <div class="timeline-position">Försäkringsförmedlare</div>
+                            <ul class="timeline-list">
+                                <li>Arbetade både självständigt och i team</li>
+                                <li>Effektiv i högt tempo och snabbt föränderlig miljö</li>
+                                <li>Samarbetade med teammedlemmar för att uppnå mål</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Januari 2014 — Februari 2015</div>
+                            <div class="timeline-company">Stellum Kapitalförvaltning, Stockholm</div>
+                            <div class="timeline-position">Försäkringsförmedlare</div>
+                            <ul class="timeline-list">
+                                <!-- Add specific responsibilities for Stellum Kapitalförvaltning here if you have them -->
+                                <li>Prospektering och kundkontakt</li>
+                                <li>Rådgivning och försäljning av finansiella produkter</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">Juli 2010 — December 2013</div>
+                            <div class="timeline-company">Svensk Kraftrevision AB, Stockholm</div>
+                            <div class="timeline-position">Mötesbokare</div>
+                            <ul class="timeline-list">
+                                <!-- Add specific responsibilities for Svensk Kraftrevision AB here if you have them -->
+                                <li>Bokade möten med företagskunder via telefon</li>
+                                <li>Ansvarade för att upprätthålla kundregister</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h2>Utbildning</h2>
+            </div>
+            <div class="section-content">
+                <div class="education-container">
+                    <div class="education-card">
+                        <div class="education-period">Juli 2007 — Juni 2010</div>
+                        <div class="education-institution">Westerlundska Gymnasiet, Enköping</div>
+                        <div class="education-field">Vård & Omsorg</div>
+                        <p>Extra tillagda ämnen:</p>
+                        <ul class="timeline-list">
+                            <li>Ma B</li>
+                            <li>Ma C</li>
+                        </ul>
+                    </div>
+                    <div class="education-card">
+                        <div class="education-period">2024 — 2025</div>
+                        <div class="education-institution">Kunskapscompaniet</div>
+                        <div class="education-field">Underhållstekniker</div>
+                        <p>Inriktning/kurser:</p>
+                        <ul class="timeline-list">
+                            <li>Mekatronik</li>
+                            <li>Mikrodatorteknik</li>
+                            <li>Industriautomation</li>
+                            <li>Robotteknik</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Internships -->
+        <section id="internships">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h2>Praktikplatser</h2>
+            </div>
+            <div class="section-content">
+                <div class="education-container">
+                    <div class="education-card">
+                        <div class="education-period">Juni 2002 — September 2002</div>
+                        <div class="education-institution">Svallings juridiska byrå, Esklistuna</div>
+                        <div class="education-field">Intern</div>
+                        <ul class="timeline-list">
+                            <li>Dokumenthantering: Förberedde och organiserade juridiska dokument</li>
+                            <li>Klientkommunikation: Hanterade kommunikation med klienter</li>
+                            <li>Assisterade vid möten och förhandlingar</li>
+                            <li>Administrativt stöd</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hobbies -->
+        <section id="hobbies">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2>Hobbies</h2>
+            </div>
+            <div class="section-content">
+                <div class="hobbies-container">
+                    <div class="hobby-card">
+                        <i class="fas fa-robot"></i>
+                        <span>Automatisering</span>
+                    </div>
+                    <div class="hobby-card">
+                        <i class="fas fa-code"></i>
+                        <span>Programmering</span>
+                    </div>
+                    <div class="hobby-card">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>Design</span>
+                    </div>
+                    <div class="hobby-card">
+                        <i class="fas fa-fish"></i>
+                        <span>Fiske</span>
+                    </div>
+                    <div class="hobby-card">
+                        <i class="fas fa-music"></i>
+                        <span>Låttextskrivning & AI-musik</span>
+                    </div>
+                    <div class="hobby-card">
+                        <i class="fas fa-rocket"></i>
+                        <span>Affärsutveckling</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages -->
+        <section id="languages">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h2>Språk</h2>
+            </div>
+            <div class="section-content">
+                <div class="competencies-grid">
+                    <div class="competency-card">
+                        <h3><i class="fas fa-comment-dots"></i> Svenska</h3>
+                        <p>Modersmål - Flytande i både tal och skrift</p>
+                        <div class="language-progress">
+                            <div class="progress-bar" style="width: 100%; background: var(--accent); height: 8px; border-radius: 4px; margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                    <div class="competency-card">
+                        <h3><i class="fas fa-comment-dots"></i> Engelska</h3>
+                        <p>Mycket skicklig - Professionell nivå</p>
+                        <div class="language-progress">
+                            <div class="progress-bar" style="width: 90%; background: var(--accent); height: 8px; border-radius: 4px; margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Arnold Sjölander &copy; 2025</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Back to top button functionality
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Highlight active section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add animation to elements when they enter viewport
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and timeline items
+        document.querySelectorAll('.competency-card, .timeline-content, .education-card, .hobby-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            
+            observer.observe(card);
+            
+            card.classList.add('animate-in');
+        });
+
+        // Animation when elements become visible
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.competency-card, .timeline-content, .education-card, .hobby-card');
+            
+            animatedElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }, 200 + index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
