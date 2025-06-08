@@ -129,6 +129,7 @@
             display: flex;
             justify-content: center;
             padding: 1rem 0;
+            flex-wrap: nowrap;
         }
 
         .nav-link {
@@ -478,14 +479,14 @@
             }
 
             .nav-link {
-                font-size: 0.9rem; /* Reduce font size for smaller screens */
-                padding: 0.6rem 1rem; /* Adjust padding slightly */
+                font-size: 0.85rem; /* Adjusted font size */
+                padding: 0.6rem 0.8rem; /* Adjusted padding */
             }
         }
 
         @media (max-width: 480px) {
             .nav-link {
-                font-size: 0.8rem; /* Further reduce font size for very small screens */
-                padding: 0.5rem 0.8rem; /* Further adjust padding */
+                font-size: 0.75rem; /* Further adjusted font size */
+                padding: 0.5rem 0.6rem; /* Further adjusted padding */
             }
         }
