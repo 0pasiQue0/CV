@@ -99,3 +99,8 @@
                 }, 200 + index * 100);
             });
         });
+
+        // Print button functionality
+        document.querySelector('.print-btn').addEventListener('click', () => {
+            window.print();
+        });
