@@ -1,0 +1,27 @@
+/* Hide elements that are not relevant for printing */
+@media print {
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #fff;
+    color: #000;
+  }
+
+  header, footer, .nav-container, .back-to-top, .print-btn {
+    display: none;
+  }
+
+  /* Ensure content is not hidden by other elements */
+  .container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  /* Remove shadows and animations */
+  .competency-card, .timeline-item, .education-card, .hobby-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+    animation: none !important;
+    -webkit-animation: none !important;
+  }
+}
